@@ -1,50 +1,50 @@
 package BypassingSitePages;
 
-import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.net.http.HttpRequest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.TreeSet;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
 
-public class SiteParser {
+
+public class SiteParser extends RecursiveAction {
     private static Connection connection;
     private static String USER_NAME = "root";
     private static String PASSWORD = "Alimnikas299";
     private static String URL = "jdbc:mysql://127.0.0.1:3306/page?serverTimezone=UTC";
     private static String PATH = "http://www.playback.ru/";
 
-    private static TreeSet<String> links = new TreeSet<>();
-    private static StringBuilder builder = new StringBuilder();
 
-
-
-    public static void main(String[] args) throws IOException, SQLException {
-        connectToDateBase();
-        pageParser(PATH);
+    public static void main(String[] args) {
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        forkJoinPool.invoke(new SiteParser());
     }
 
-    public static void pageParser(String path) throws IOException, SQLException {
+    public static void pageParser(String path) throws IOException, SQLException, InterruptedException {
         Document document = Jsoup.connect(path)
                 .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                 .referrer("http://www.google.com").maxBodySize(0).get();
 
-        Elements elements = document.getElementsByTag("a");
+        Elements elements = document.getElementsByAttribute("href");
 
         for (Element element : elements) {
-            links.add(element.absUrl("href"));
+            String link = element.absUrl("href");
 
-            String sql = "INSERT INTO page(path, code, content) " +
-                    "VALUES('" + element.absUrl("href") + "', '" + 200 + "', '" + element.html() + "')";
+            if (link.startsWith(PATH) && link.endsWith(".html")) {
 
-            connection.createStatement().executeUpdate(sql);
+                String sql = "INSERT INTO page(path, code, content) " +
+                        "VALUES('" + link.substring(22) + "', '" + 200 + "', '" + element.outerHtml() + "')";
+
+                connection.createStatement().execute(sql);
+            }
         }
+
     }
 
     public static Connection connectToDateBase() {
@@ -65,5 +65,20 @@ public class SiteParser {
             }
         }
         return connection;
+    }
+
+    @Override
+    protected void compute() {
+         connectToDateBase();
+        try {
+            pageParser(PATH);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        invokeAll();
     }
 }
