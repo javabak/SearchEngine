@@ -5,10 +5,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.sound.sampled.AudioFormat;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
@@ -17,8 +19,9 @@ public class SiteParser extends RecursiveAction {
     private static Connection connection;
     private static String USER_NAME = "root";
     private static String PASSWORD = "Alimnikas299";
-    private static String URL = "jdbc:mysql://127.0.0.1:3306/page?serverTimezone=UTC";
+    private static String Url = "jdbc:mysql://127.0.0.1:3306/page?serverTimezone=UTC";
     private static String PATH = "http://www.playback.ru/";
+
 
 
     public static void main(String[] args) {
@@ -28,8 +31,13 @@ public class SiteParser extends RecursiveAction {
 
     public static void pageParser(String path) throws IOException, SQLException, InterruptedException {
         Document document = Jsoup.connect(path)
-                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                 .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                 .referrer("http://www.google.com").maxBodySize(0).get();
+
+
+        String el = document.html();
+        String encodedString = Base64.getEncoder().encodeToString(el.getBytes());
+
 
         Elements elements = document.getElementsByAttribute("href");
 
@@ -39,19 +47,18 @@ public class SiteParser extends RecursiveAction {
             if (link.startsWith(PATH) && link.endsWith(".html")) {
 
                 String sql = "INSERT INTO page(path, code, content) " +
-                        "VALUES('" + link.substring(22) + "', '" + 200 + "', '" + element.outerHtml() + "')";
+                        "VALUES('" + link.substring(22) + "', '" + 200 + "', '" + encodedString + "')";
 
-                connection.createStatement().execute(sql);
+                connection.createStatement().executeUpdate(sql);
             }
         }
-
     }
 
     public static Connection connectToDateBase() {
         if (connection == null) {
             try {
 
-                connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+                connection = DriverManager.getConnection(Url, USER_NAME, PASSWORD);
 
                 connection.createStatement().execute("DROP TABLE IF EXISTS page");
                 connection.createStatement().execute("CREATE TABLE page (" +
