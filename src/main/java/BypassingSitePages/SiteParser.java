@@ -5,7 +5,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import javax.sound.sampled.AudioFormat;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,16 +23,16 @@ public class SiteParser extends RecursiveAction {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, IOException, InterruptedException {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         forkJoinPool.invoke(new SiteParser());
+
     }
 
     public static void pageParser(String path) throws IOException, SQLException, InterruptedException {
         Document document = Jsoup.connect(path)
                  .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                 .referrer("http://www.google.com").maxBodySize(0).get();
-
 
         String el = document.html();
         String encodedString = Base64.getEncoder().encodeToString(el.getBytes());
@@ -60,8 +59,8 @@ public class SiteParser extends RecursiveAction {
 
                 connection = DriverManager.getConnection(Url, USER_NAME, PASSWORD);
 
-                connection.createStatement().execute("DROP TABLE IF EXISTS page");
-                connection.createStatement().execute("CREATE TABLE page (" +
+                connection.createStatement().executeUpdate("DROP TABLE IF EXISTS page");
+                connection.createStatement().executeUpdate("CREATE TABLE page (" +
                         "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
                         "path TEXT NOT NULL," +
                         "code INT NOT NULL," +
@@ -76,7 +75,7 @@ public class SiteParser extends RecursiveAction {
 
     @Override
     protected void compute() {
-         connectToDateBase();
+        connectToDateBase();
         try {
             pageParser(PATH);
         } catch (IOException e) {
