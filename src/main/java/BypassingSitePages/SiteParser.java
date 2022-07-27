@@ -1,7 +1,6 @@
 package BypassingSitePages;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -20,25 +19,28 @@ public class SiteParser extends RecursiveAction {
     private static String PASSWORD = "Alimnikas299";
     private static String Url = "jdbc:mysql://127.0.0.1:3306/page?serverTimezone=UTC";
     private static String PATH = "http://www.playback.ru/";
-
+    private static org.jsoup.Connection.Response document;
 
 
     public static void main(String[] args) throws SQLException, IOException, InterruptedException {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         forkJoinPool.invoke(new SiteParser());
-
     }
 
     public static void pageParser(String path) throws IOException, SQLException, InterruptedException {
-        Document document = Jsoup.connect(path)
-                 .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                .referrer("http://www.google.com").maxBodySize(0).get();
 
-        String el = document.html();
-        String encodedString = Base64.getEncoder().encodeToString(el.getBytes());
+        document = Jsoup.connect(path)
+                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                .referrer("http://www.google.com")
+                .maxBodySize(0)
+                .execute();
 
 
-        Elements elements = document.getElementsByAttribute("href");
+//        String el = document.toString();
+//        String encodedString = Base64.getEncoder().encodeToString(el.getBytes());
+
+
+        Elements elements = document.parse().getElementsByAttribute("href");
 
         for (Element element : elements) {
             String link = element.absUrl("href");
@@ -46,7 +48,7 @@ public class SiteParser extends RecursiveAction {
             if (link.startsWith(PATH) && link.endsWith(".html")) {
 
                 String sql = "INSERT INTO page(path, code, content) " +
-                        "VALUES('" + link.substring(22) + "', '" + 200 + "', '" + encodedString + "')";
+                        "VALUES('" + link.substring(22) + "', '" + document.statusCode() + "', '" + document.toString() + "')";
 
                 connection.createStatement().executeUpdate(sql);
             }
