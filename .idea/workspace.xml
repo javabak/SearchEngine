@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d15b856f-6b37-4ab9-820e-76774467c8ff" name="Changes" comment="step 2">
+    <list default="true" id="d15b856f-6b37-4ab9-820e-76774467c8ff" name="Changes" comment="step 3">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Lemmatizer/LemmaFinder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Lemmatizer/Lemma.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Lemmatizer/Lemma.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Lemmatizer/Lemma.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +27,6 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/Lemmatizer/Lemma.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
@@ -63,9 +61,22 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.Lemma">
+  <component name="RunManager" selected="Application.LemmaFinder">
     <configuration name="Lemma" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Lemmatizer.Lemma" />
+      <module name="SearchEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Lemmatizer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LemmaFinder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Lemmatizer.LemmaFinder" />
       <module name="SearchEngine" />
       <extension name="coverage">
         <pattern>
@@ -96,6 +107,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.LemmaFinder" />
         <item itemvalue="Application.Lemma" />
         <item itemvalue="Application.SiteParser" />
         <item itemvalue="JAR Application.morphology-1.5.jar" />
@@ -139,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658924868256</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="step 3">
+      <created>1658930769383</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1658930769384</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,6 +174,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="step 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="step 2" />
+    <MESSAGE value="step 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="step 3" />
   </component>
 </project>
