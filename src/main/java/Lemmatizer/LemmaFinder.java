@@ -1,10 +1,9 @@
 package Lemmatizer;
 
 import BypassingSitePages.SiteParser;
-import Entitys.Index;
-import Entitys.Lemma;
-import Entitys.Page;
-import Main.Main;
+import Entites.Index;
+import Entites.Lemma;
+import Entites.Page;
 import org.apache.commons.math3.util.Precision;
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
@@ -12,13 +11,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 
 public class LemmaFinder {
@@ -26,8 +27,8 @@ public class LemmaFinder {
 
     private final LuceneMorphology luceneMorphology = new RussianLuceneMorphology();
     private static final String[] particlesNames = new String[]{"МЕЖД", "ПРЕДЛ", "СОЮЗ"};
-    private volatile HashMap<String, Integer> lemmas = new HashMap<>();
-    private volatile HashMap<String, Double> lemmaRank = new HashMap<>();
+    private final HashMap<String, Integer> lemmas = new HashMap<>();
+    private final HashMap<String, Double> lemmaRank = new HashMap<>();
     private static final TreeSet<String> treeSet = new TreeSet<>();
     private static final Lemma lemma = new Lemma();
     private static final Page page = new Page();

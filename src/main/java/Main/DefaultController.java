@@ -1,3 +1,4 @@
+
 package Main;
 
 import org.springframework.stereotype.Controller;
@@ -11,3 +12,5 @@ public class DefaultController {
         return "index";
     }
 }
+
+

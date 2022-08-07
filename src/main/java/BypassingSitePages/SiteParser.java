@@ -1,6 +1,6 @@
 package BypassingSitePages;
 
-import Entitys.Page;
+import Entites.Page;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,9 +21,9 @@ public class SiteParser extends RecursiveAction {
     public final static String Url = "jdbc:mysql://127.0.0.1:3306/page?serverTimezone=UTC";
     public final static String PATH = "http://www.playback.ru/";
     private final static String regex = "[^А-Яа-яA-Za-z<>/\\s+!-]+";
-    private final static  Page page = new Page();
+    private final static Page page = new Page();
 
-    public static void main(String[] args) throws SQLException, IOException, InterruptedException {
+    public static void main(String[] args) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         forkJoinPool.invoke(new SiteParser());
     }
