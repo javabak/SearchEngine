@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d15b856f-6b37-4ab9-820e-76774467c8ff" name="Changes" comment="step 3">
+    <list default="true" id="d15b856f-6b37-4ab9-820e-76774467c8ff" name="Changes" comment="step 4 changed">
+      <change afterPath="$PROJECT_DIR$/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/BypassingSitePages/Page.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/BypassingSitePages/PageRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Lemmatizer/Lemma.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Lemmatizer/LemmaRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Main/DefaultController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Main/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" afterDir="false" />
@@ -18,6 +26,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="com.haulmont.jpb.JpaRepository" />
+        <option value="HTML File" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -32,11 +43,15 @@
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
       <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
         <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
     <option name="myId2Visible">
       <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
         <entry key="com.haulmont.jpb.jpaStructure" value="false" />
       </map>
     </option>
@@ -52,9 +67,11 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ToolWindowDebug.ShowToolbar&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Администратор/IdeaProjects/SearchEngine/russianmorphology&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
@@ -62,39 +79,64 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.LemmaFinder">
-    <configuration name="Lemma" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Lemmatizer.Lemma" />
-      <module name="SearchEngine" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Lemmatizer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="LemmaFinder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Lemmatizer.LemmaFinder" />
-      <module name="SearchEngine" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Lemmatizer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SiteParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Администратор\IdeaProjects\SearchEngine\src\main\resources" />
+      <recent name="C:\Users\Администратор\IdeaProjects\SearchEngine" />
+      <recent name="C:\Users\Администратор\IdeaProjects\SearchEngine\src" />
+      <recent name="C:\Users\Администратор\IdeaProjects\SearchEngine\src\main\resources\static" />
+      <recent name="C:\Users\Администратор\IdeaProjects\SearchEngine\src\main\resources\templates" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Lemmatizer.LemmaFinder">
+    <configuration name="BypassingSitePages.SiteParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="BypassingSitePages.SiteParser" />
       <module name="SearchEngine" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="BypassingSitePages.*" />
+          <option name="PATTERN" value="Repositories.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Lemma" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Entitys.Lemma" />
+      <module name="SearchEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repositories.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Lemmatizer.LemmaFinder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Lemmatizer.LemmaFinder" />
+      <module name="SearchEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Repositories.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.Main" />
+      <module name="SearchEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Main.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -108,9 +150,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LemmaFinder" />
-        <item itemvalue="Application.SiteParser" />
-        <item itemvalue="Application.Lemma" />
+        <item itemvalue="Application.Lemmatizer.LemmaFinder" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.BypassingSitePages.SiteParser" />
         <item itemvalue="JAR Application.morphology-1.5.jar" />
       </list>
     </recent_temporary>
@@ -166,7 +208,21 @@
       <option name="project" value="LOCAL" />
       <updated>1659004100185</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="step 4">
+      <created>1659173429837</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1659173429837</updated>
+    </task>
+    <task id="LOCAL-00008" summary="step 4 changed">
+      <created>1659869624063</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1659869624063</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,6 +239,18 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="step 2" />
     <MESSAGE value="step 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="step 3" />
+    <MESSAGE value="step 4" />
+    <MESSAGE value="step 4 changed" />
+    <option name="LAST_COMMIT_MESSAGE" value="step 4 changed" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.hibernate.internal.util.config.ConfigurationException" package="org.hibernate.internal.util.config" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

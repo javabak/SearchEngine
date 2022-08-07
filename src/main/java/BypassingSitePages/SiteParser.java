@@ -1,6 +1,8 @@
 package BypassingSitePages;
 
+import Entitys.Page;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -18,37 +20,44 @@ public class SiteParser extends RecursiveAction {
     public final static String PASSWORD = "Alimnikas299";
     public final static String Url = "jdbc:mysql://127.0.0.1:3306/page?serverTimezone=UTC";
     public final static String PATH = "http://www.playback.ru/";
+    private final static String regex = "[^А-Яа-яA-Za-z<>/\\s+!-]+";
+    private final static  Page page = new Page();
 
     public static void main(String[] args) throws SQLException, IOException, InterruptedException {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         forkJoinPool.invoke(new SiteParser());
     }
 
-    private static void pageParser() throws IOException, SQLException, InterruptedException {
-
-        org.jsoup.Connection.Response document = Jsoup.connect(SiteParser.PATH)
+    public void pageParser() throws IOException, SQLException, InterruptedException {
+        org.jsoup.Connection.Response d = Jsoup.connect(PATH).execute();
+        Document document = Jsoup.connect(SiteParser.PATH)
                 .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                 .referrer("http://www.google.com")
                 .maxBodySize(0)
-                .execute();
+                .get();
 
 
-        Elements elements = document.parse().getElementsByAttribute("href");
+        Elements elements = document.getElementsByAttribute("href");
 
         for (Element element : elements) {
             String link = element.absUrl("href");
 
             if (link.startsWith(PATH) && link.endsWith(".html")) {
 
+                page.setCode(d.statusCode());
+                page.setContent(document.toString().replaceAll(regex, ""));
+                page.setPath(link.substring(22));
+
                 String sql = "INSERT INTO page(path, code, content) " +
-                        "VALUES('" + link.substring(22) + "', '" + document.statusCode() + "', '" + document + "')";
+                        "VALUES('" + link.substring(22) + "', '" + d.statusCode() + "', '"
+                        + document.toString().replaceAll(regex, "") + "')";
 
                 connection.createStatement().executeUpdate(sql);
             }
         }
     }
 
-    private static void connectToDateBase() {
+    public void connectToDateBase() {
         if (connection == null) {
             try {
 
