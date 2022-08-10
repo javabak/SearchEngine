@@ -1,5 +1,4 @@
-package Entites;
-
+package Entities;
 
 
 import javax.persistence.*;
@@ -8,13 +7,14 @@ import javax.persistence.*;
 @Table(name = "lemma")
 public class Lemma {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Page page;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinTable(name = "`index`", joinColumns = {@JoinColumn(name = "lemma_id")})
     private int id;
+
     private String lemma;
     private int frequency;
 

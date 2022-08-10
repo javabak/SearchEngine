@@ -1,4 +1,5 @@
-package Entites;
+package Entities;
+
 
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Index {
 
     @Column(name = "`rank`")
     private double rank;
+
 
     public int getId() {
         return id;

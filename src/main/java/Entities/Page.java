@@ -1,12 +1,13 @@
-package Entites;
+package Entities;
+
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "lemma")
+@Table(name = "page")
 public class Page {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Lemma lemma;
 
     @Id

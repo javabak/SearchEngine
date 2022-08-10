@@ -1,0 +1,17 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+    <bean id="main" class="src.main.Main.Main"/>
+    <bean id="site_parser" class="src.main.BypassingSitePages.SiteParser"/>
+    <bean id="index" class="src.main.Entities.Index"/>
+    <bean id="lemma" class="src.main.Entities.Lemma"/>
+    <bean id="page" class="src.main.Entities.Page"/>
+    <bean id="page_repository" class="src.main.Repositories.PageRepository"/>
+    <bean id="index_repository" class="src.main.Repositories.IndexRepository"/>
+    <bean id="lemma_repository" class="src.main.Repositories.LemmaRepository"/>
+
+    <context:component-scan base-package="main"/>
+</beans>
