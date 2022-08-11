@@ -282,7 +282,7 @@ public class LemmaFinder {
         }
     }
     
-    public void printSitesWhichContainsLemmasFroQuery() throws IOException {
+    public void printSitesWhichContainsLemmasFromQuery() throws IOException {
         for (String link : SiteParser.links) {
             for (Map.Entry<String, Integer> entry : lemmasFromQuery.entrySet()) {
 
@@ -329,7 +329,7 @@ public class LemmaFinder {
 
         for (Map.Entry<String, Integer> lemma : lemmasFrequency.entrySet()) {
 
-            String sql = "INSERT INTO lemma(`lemma`, frequency) " +
+            String sql = "INSERT INTO lemma(lemma, frequency) " +
                     "VALUES('" + lemma.getKey() + "', '" + lemma.getValue() + "')";
 
             connection.createStatement().executeUpdate(sql);
@@ -394,7 +394,7 @@ public class LemmaFinder {
 
         saveEntities();
         saveLemmasFromQuery(words);
-        printSitesWhichContainsLemmasFroQuery();
+        printSitesWhichContainsLemmasFromQuery();
     }
 
     public void saveEntities() {
