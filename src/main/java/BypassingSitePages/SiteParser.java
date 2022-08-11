@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -23,14 +24,12 @@ import java.util.concurrent.RecursiveAction;
 public class SiteParser extends RecursiveAction {
     public final static String USER_NAME = "root";
     public final static String PASSWORD = "Alimnikas299";
-    public static String Url = "jdbc:mysql://127.0.0.1:3306/page?serverTimezone=UTC";
-    public final static String PATH = "https://www.playback.ru/";
+    public final static String Url = "jdbc:mysql://127.0.0.1:3306/page?serverTimezone=UTC";
+    public final static String path = "https://www.playback.ru/";
     private final static String regex = "[^А-Яа-яA-Za-z<>/\\s+!-]+";
-    private static String url = "https://www.playback.ru/";
 
-
-    private static Connection connection;
-    public static TreeSet<String> links = new TreeSet<>();
+    public static Connection connection;
+    public static ArrayList<String> links = new ArrayList<>();
     public static Page page = new Page();
 
     @Autowired
@@ -43,9 +42,10 @@ public class SiteParser extends RecursiveAction {
         forkJoinPool.shutdownNow();
     }
 
-    public void mainPageParser() throws IOException, SQLException, InterruptedException {
-        org.jsoup.Connection.Response d = Jsoup.connect(PATH).execute();
-        Document document = Jsoup.connect(SiteParser.PATH)
+
+    public void mainPageParser(String path) throws IOException, SQLException, InterruptedException {
+        org.jsoup.Connection.Response d = Jsoup.connect(path).execute();
+        Document document = Jsoup.connect(SiteParser.path)
                 .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                 .referrer("http://www.google.com")
                 .maxBodySize(0)
@@ -56,15 +56,15 @@ public class SiteParser extends RecursiveAction {
         for (Element element : elements) {
             String link = element.absUrl("href");
 
-            if (link.startsWith(PATH) && link.endsWith(".html")) {
+            if (link.startsWith(path) && link.endsWith(".html")) {
 
                 links.add(link);
-                links.add(PATH);
+                links.add(path);
 
-//                page.setCode(d.statusCode());
-//                page.setContent(document.toString().replaceAll(regex, ""));
-//                page.setPath(link.substring(22));
-//
+                page.setCode(d.statusCode());
+                page.setContent(document.toString().replaceAll(regex, ""));
+                page.setPath(link.substring(22));
+
 //                pageRepository.save(page);
 
                 String sql = "INSERT INTO page(path, code, content) " +
@@ -74,6 +74,7 @@ public class SiteParser extends RecursiveAction {
                 connection.createStatement().executeUpdate(sql);
             }
         }
+        mainPageParser(path);
     }
 
     public void connectToDateBase() {
@@ -99,10 +100,12 @@ public class SiteParser extends RecursiveAction {
     protected void compute() {
         connectToDateBase();
         try {
-            mainPageParser();
+            mainPageParser(path);
         } catch (IOException | SQLException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+        fork();
+
         invokeAll();
     }
 }
