@@ -1,54 +1,64 @@
 package Entities;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "page")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Page {
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private Lemma lemma;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinTable(name = "`index`", joinColumns = {@JoinColumn(name = "id")})
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private int id;
 
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private String path;
+
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private int code;
+
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private String content;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "page")
+    @Column(nullable = false)
+    @Getter
+    @Setter
+    private Set<Index> indexes;
 
-    public int getId() {
-        return id;
+    @Getter
+    @Setter
+    @ManyToOne
+    private Site site;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Page page = (Page) o;
+        return id == page.id && code == page.code && Objects.equals(path, page.path) && Objects.equals(content, page.content);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, path, code, content);
     }
 }

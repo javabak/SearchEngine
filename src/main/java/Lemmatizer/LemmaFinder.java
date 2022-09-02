@@ -1,27 +1,23 @@
 package Lemmatizer;
 
 import BypassingSitePages.SiteParser;
-import Entities.Index;
-import Entities.Lemma;
-import Entities.Page;
-import Repositories.IndexRepository;
-import Repositories.LemmaRepository;
-import Repositories.PageRepository;
 import org.apache.commons.math3.util.Precision;
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ForkJoinPool;
-
 
 public class LemmaFinder {
     private final static String REGEX = "[^А-Яа-я]+";
@@ -29,23 +25,11 @@ public class LemmaFinder {
     private final LuceneMorphology luceneMorphology = new RussianLuceneMorphology();
     private static final String[] particlesNames = new String[]{"МЕЖД", "ПРЕДЛ", "СОЮЗ"};
 
-    private HashMap<String, Integer> lemmasFrequency = new HashMap<>();
-    private HashMap<String, Double> lemmasRank = new HashMap<>();
-    private HashMap<String, Integer> lemmasFromQuery = new HashMap<>();
-    private String words = "купить гб штатив";
-
-    private static final Lemma lemma = new Lemma();
-    private static final Index index = new Index();
-    private static final Page page = new Page();
-
-    @Autowired
-    private LemmaRepository lemmaRepository;
-
-    @Autowired
-    private IndexRepository indexRepository;
-
-    @Autowired
-    private PageRepository pageRepository;
+    private final HashMap<String, Integer> lemmasFrequency = new HashMap<>();
+    private final HashMap<String, Double> lemmasRank = new HashMap<>();
+    private HashMap<String, Integer> lemmasFromQueryWithFrequency = new HashMap<>();
+    private final TreeMap<String, String> linksFromLemmasQuery = new TreeMap<>();
+    private final String words = "оплата корзина телефон магазин";
 
 
     public LemmaFinder() throws IOException {
@@ -57,104 +41,13 @@ public class LemmaFinder {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         forkJoinPool.invoke(new SiteParser());
 
-        lemmaFinder.classMethods();
+        lemmaFinder.launchClassMethods();
+        forkJoinPool.shutdownNow();
     }
 
-    public void getTitleLemmasFromMainPage() throws IOException {
-        String path = SiteParser.path;
-        Document document = Jsoup.connect(path)
-                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                .referrer("http://www.google.com")
-                .maxBodySize(0)
-                .get();
-
-        String title = document.title();
-
-        String words = title.replaceAll(REGEX, " ").toLowerCase().trim();
-
-        for (String word : words.toLowerCase().split(" ")) {
-
-            List<String> wordBaseForms = luceneMorphology.getMorphInfo(word);
-            if (anyWordBaseBelongToParticle(wordBaseForms)) {
-                continue;
-            }
-
-            List<String> normalForms = luceneMorphology.getNormalForms(word);
-
-            String normalWord = normalForms.get(0);
-
-            if (lemmasFrequency.containsKey(normalWord)) {
-                lemmasFrequency.put(normalWord, lemmasFrequency.get(normalWord) + 1);
-                lemma.setLemma(normalWord);
-                lemma.setFrequency(lemmasFrequency.get(normalWord) + 1);
-                index.setLemmaId(lemma.getId());
-                lemmaRepository.save(lemma);
-            } else {
-                lemmasFrequency.put(normalWord, 1);
-                lemma.setLemma(normalWord);
-                lemma.setFrequency(1);
-                index.setLemmaId(lemma.getId());
-                lemmaRepository.save(lemma);
-            }
-        }
-        double rank;
-        for (Map.Entry<String, Integer> lemma : lemmasFrequency.entrySet()) {
-            rank = Precision.round(lemma.getValue(), 1);
-            lemmasRank.put(lemma.getKey(), rank);
-            index.setRank(rank);
-
-        }
-    }
-
-
-    public void getBodyLemmasFromMainPage() throws IOException {
-        String path = SiteParser.path;
-        Document document = Jsoup.connect(path)
-                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                .referrer("http://www.google.com")
-                .maxBodySize(0)
-                .get();
-
-        Element body = document.body();
-
-        String words = body.toString().replaceAll(REGEX, " ").toLowerCase();
-
-        for (String word : words.toLowerCase().trim().split(" ")) {
-
-            List<String> wordBaseForms = luceneMorphology.getMorphInfo(word);
-            if (anyWordBaseBelongToParticle(wordBaseForms)) {
-                continue;
-            }
-
-            List<String> normalForms = luceneMorphology.getNormalForms(word);
-
-            String normalWord = normalForms.get(0);
-
-            if (lemmasFrequency.containsKey(normalWord)) {
-                lemmasFrequency.put(normalWord, lemmasFrequency.get(normalWord) + 1);
-                lemma.setLemma(normalWord);
-                lemma.setFrequency(lemmasFrequency.get(normalWord) + 1);
-                index.setLemmaId(lemma.getId());
-                lemmaRepository.save(lemma);
-            } else {
-                lemmasFrequency.put(normalWord, 1);
-                lemma.setLemma(normalWord);
-                lemma.setFrequency(1);
-                index.setLemmaId(lemma.getId());
-                lemmaRepository.save(lemma);
-            }
-        }
-        double rank;
-        for (Map.Entry<String, Integer> lemma : lemmasFrequency.entrySet()) {
-            rank = Precision.round(lemma.getValue() * 0.8, 1);
-            lemmasRank.put(lemma.getKey(), rank);
-            index.setRank(rank);
-        }
-    }
 
     public void getBodyLemmasFromEachPage() throws IOException {
-
-        for (String link : SiteParser.links) {
+        for (String link : SiteParser.pageLinks) {
 
             Document document = Jsoup.connect(link)
                     .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
@@ -179,30 +72,20 @@ public class LemmaFinder {
 
                 if (lemmasFrequency.containsKey(normalWord)) {
                     lemmasFrequency.put(normalWord, lemmasFrequency.get(normalWord) + 1);
-                    lemma.setLemma(normalWord);
-                    lemma.setFrequency(lemmasFrequency.get(normalWord) + 1);
-                    index.setLemmaId(lemma.getId());
-                    lemmaRepository.save(lemma);
                 } else {
                     lemmasFrequency.put(normalWord, 1);
-                    lemma.setLemma(normalWord);
-                    lemma.setFrequency(1);
-                    index.setLemmaId(lemma.getId());
-                    lemmaRepository.save(lemma);
                 }
             }
             double rank;
             for (Map.Entry<String, Integer> lemma : lemmasFrequency.entrySet()) {
                 rank = Precision.round(lemma.getValue() * 0.8, 1);
                 lemmasRank.put(lemma.getKey(), rank);
-                index.setRank(rank);
             }
         }
     }
 
     public void getTitleLemmasFromEachPage() throws IOException {
-
-        for (String link : SiteParser.links) {
+        for (String link : SiteParser.pageLinks) {
 
             Document document = Jsoup.connect(link)
                     .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
@@ -227,24 +110,14 @@ public class LemmaFinder {
 
                 if (lemmasFrequency.containsKey(normalWord)) {
                     lemmasFrequency.put(normalWord, lemmasFrequency.get(normalWord) + 1);
-                    lemma.setLemma(normalWord);
-                    lemma.setFrequency(lemmasFrequency.get(normalWord) + 1);
-                    index.setLemmaId(lemma.getId());
-                    lemmaRepository.save(lemma);
-
                 } else {
                     lemmasFrequency.put(normalWord, 1);
-                    lemma.setLemma(normalWord);
-                    lemma.setFrequency(1);
-                    index.setLemmaId(lemma.getId());
-                    lemmaRepository.save(lemma);
                 }
             }
             double rank;
             for (Map.Entry<String, Integer> lemma : lemmasFrequency.entrySet()) {
                 rank = Precision.round(lemma.getValue(), 1);
                 lemmasRank.put(lemma.getKey(), rank);
-                index.setRank(rank);
             }
         }
     }
@@ -266,25 +139,26 @@ public class LemmaFinder {
 
             String normalWord = normalForms.get(0);
 
-
-            String sql = "SELECT lemma, frequency FROM page.lemma ORDER BY frequency DESC";
+            String sql = "SELECT lemma, frequency FROM search_engine.lemma ORDER BY frequency DESC";
             ResultSet resultSet = connection.createStatement().executeQuery(sql);
 
             while (resultSet.next()) {
                 if (resultSet.getString("lemma").equals(normalWord)) {
-                    if (resultSet.getInt("frequency") > 300) {
-                        lemmasFromQuery.put(normalWord, resultSet.getInt("frequency") / 10);
+                    if (resultSet.getInt("frequency") > 100) {
+                        lemmasFromQueryWithFrequency.put(normalWord, resultSet.getInt("frequency") / 10);
                     } else {
-                        lemmasFromQuery.put(normalWord, resultSet.getInt("frequency"));
+                        lemmasFromQueryWithFrequency.put(normalWord, resultSet.getInt("frequency"));
                     }
                 }
             }
         }
     }
-    
-    public void printSitesWhichContainsLemmasFromQuery() throws IOException {
-        for (String link : SiteParser.links) {
-            for (Map.Entry<String, Integer> entry : lemmasFromQuery.entrySet()) {
+
+
+    public void getSitesWhichContainsLemmasFromQuery() throws IOException {
+        for (Map.Entry<String, Integer> entry : lemmasFromQueryWithFrequency.entrySet()) {
+            for (String link : SiteParser.pageLinks) {
+
 
                 Document document = Jsoup.connect(link)
                         .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
@@ -307,13 +181,10 @@ public class LemmaFinder {
                     String normalWord = normalForms.get(0);
 
                     if (entry.getKey().equals(normalWord)) {
-                        System.out.println("Слово " + entry.getKey() + "встречается на сайте: " + link);
-                    } else {
-                        continue;
+                        linksFromLemmasQuery.put(normalWord, link);
                     }
                 }
             }
-            break;
         }
     }
 
@@ -336,6 +207,7 @@ public class LemmaFinder {
         }
     }
 
+
     public void insertLemmaRankIntoDataBase() throws SQLException {
         Connection connection = DriverManager.getConnection(SiteParser.Url, SiteParser.USER_NAME, SiteParser.PASSWORD);
 
@@ -348,10 +220,9 @@ public class LemmaFinder {
 
         for (Map.Entry<String, Double> doubleEntry : lemmasRank.entrySet()) {
 
-            String sql = "INSERT INTO `index`(page_id, lemma_id, `rank`) VALUES('" + page.getId() + "'," +
-                    " '" + lemma.getId() + "', " +
+            String sql = "INSERT INTO `index`(page_id, lemma_id, `rank`) VALUES('" + 0 + "'," +
+                    " '" + 0 + "', " +
                     "'" + doubleEntry.getValue() + "')";
-
             connection.createStatement().executeUpdate(sql);
         }
     }
@@ -370,11 +241,13 @@ public class LemmaFinder {
         return false;
     }
 
+
     private void printAllLemmas() {
         for (Map.Entry<String, Integer> w : lemmasFrequency.entrySet()) {
             System.out.println(w.getKey() + " - " + w.getValue());
         }
     }
+
 
     private void printLemmaRank() {
         for (Map.Entry<String, Double> doubleEntry : lemmasRank.entrySet()) {
@@ -382,23 +255,27 @@ public class LemmaFinder {
         }
     }
 
-    private void classMethods() throws SQLException, IOException {
-        getTitleLemmasFromMainPage();
-        getBodyLemmasFromMainPage();
 
+    private TreeMap<String, String> printSitesWhichContainsLemmasFromQuery() {
+        for (Map.Entry<String, String> entry : linksFromLemmasQuery.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
+        if (linksFromLemmasQuery.isEmpty()) {
+            return new TreeMap<>();
+        } else {
+            return linksFromLemmasQuery;
+        }
+    }
+
+    public void launchClassMethods() throws SQLException, IOException {
         getTitleLemmasFromEachPage();
         getBodyLemmasFromEachPage();
 
         insertLemmaIntoDataBase();
         insertLemmaRankIntoDataBase();
 
-        saveEntities();
         saveLemmasFromQuery(words);
+        getSitesWhichContainsLemmasFromQuery();
         printSitesWhichContainsLemmasFromQuery();
-    }
-
-    public void saveEntities() {
-        indexRepository.save(index);
-        lemmaRepository.save(lemma);
     }
 }

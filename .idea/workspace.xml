@@ -5,25 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d15b856f-6b37-4ab9-820e-76774467c8ff" name="Changes" comment="step 4 changed">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entities/Site.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entities/Status.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Main/Init.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/hello.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/beans.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/LemmaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/LemmaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Index.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Lemma.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Lemma.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Page.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Lemmatizer/LemmaFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Lemmatizer/LemmaFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main/DefaultController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Repositories/IndexRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Repositories/IndexRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Repositories/LemmaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Repositories/LemmaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Repositories/PageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Repositories/PageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/beans.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="com.haulmont.jpb.JpaRepository" />
-        <option value="HTML File" />
         <option value="Interface" />
+        <option value="HTML File" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -72,15 +90,19 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;ToolWindowDebug.ShowToolbar&quot;: &quot;false&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-11&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Администратор/IdeaProjects/SearchEngine/russianmorphology/morph/target/morph-1.5.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Администратор/IdeaProjects/SearchEngine&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="Lemmatizer" />
+      <recent name="Entities" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Администратор\IdeaProjects\SearchEngine\src\main\resources" />
       <recent name="C:\Users\Администратор\IdeaProjects\SearchEngine\src\main\resources\static" />
@@ -92,7 +114,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Lemmatizer.LemmaFinder">
+  <component name="RunManager" selected="Application.LemmaFinder">
     <configuration name="BypassingSitePages.SiteParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="BypassingSitePages.SiteParser" />
       <module name="SearchEngine" />
@@ -106,7 +128,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Lemmatizer.LemmaFinder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="LemmaFinder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Lemmatizer.LemmaFinder" />
       <module name="SearchEngine" />
       <extension name="coverage">
@@ -151,7 +173,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Lemmatizer.LemmaFinder" />
+        <item itemvalue="Application.LemmaFinder" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.BypassingSitePages.SiteParser" />
         <item itemvalue="Application.SiteParsing" />
@@ -231,8 +253,28 @@
       <option name="project" value="LOCAL" />
       <updated>1660131273645</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="step 4 changed">
+      <created>1660235673883</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1660235673883</updated>
+    </task>
+    <task id="LOCAL-00011" summary="step 4 changed">
+      <created>1660235860402</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1660235860402</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:com.google.protobuf:protobuf-java" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:javax.persistence:javax.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate:hibernate-core" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
