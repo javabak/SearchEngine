@@ -1,5 +1,4 @@
-package Entities;
-
+package entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,11 +9,12 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+
 @Entity
-@Table(name = "page")
+@Table(name = "lemma")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Page {
+public class Lemma {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,19 +26,15 @@ public class Page {
     @Getter
     @Setter
     @Column(nullable = false)
-    private String path;
+    private String lemma;
 
     @Getter
     @Setter
     @Column(nullable = false)
-    private int code;
+    private int frequency;
 
-    @Getter
-    @Setter
-    @Column(nullable = false)
-    private String content;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "page")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lemma")
     @Column(nullable = false)
     @Getter
     @Setter
@@ -47,18 +43,18 @@ public class Page {
     @Getter
     @Setter
     @ManyToOne
-    private Site site;
+    private Site page;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Page page = (Page) o;
-        return id == page.id && code == page.code && Objects.equals(path, page.path) && Objects.equals(content, page.content);
+        Lemma lemma1 = (Lemma) o;
+        return id == lemma1.id && frequency == lemma1.frequency && Objects.equals(lemma, lemma1.lemma);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, path, code, content);
+        return Objects.hash(id, lemma, frequency);
     }
 }

@@ -1,11 +1,11 @@
-package Repositories;
+package repositories;
 
-import Entities.Page;
+import entities.Lemma;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PageRepository extends JpaRepository<Page, Integer> {
-
+public interface LemmaRepository extends JpaRepository<Lemma, Integer> {
 
 }
+

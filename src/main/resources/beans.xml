@@ -5,11 +5,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
-    <bean id="main" class="Main.Main"/>
-    <bean id="site_parser" class="BypassingSitePages.SiteParser"/>
-    <bean id="lemma_finder" class="Lemmatizer.LemmaFinder"/>
-    <bean id="index" class="Entities.Index"/>
-    <bean id="lemma" class="Entities.Lemma"/>
-    <bean id="page" class="Entities.Page"/>
+    <bean id="main" class="main.Main"/>
+    <bean id="site_parser" class="bypassingSitePages.SiteParser"/>
+    <bean id="lemma_finder" class="lemmatizer.LemmaFinder"/>
+    <bean id="index" class="entities.Index"/>
+    <bean id="lemma" class="entities.Lemma"/>
+    <bean id="page" class="entities.Page"/>
     <bean id="lemmaService" class="Services.LemmaService"/>
 </beans>

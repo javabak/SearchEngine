@@ -4,26 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d15b856f-6b37-4ab9-820e-76774467c8ff" name="Changes" comment="step 4 changed">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Entities/Site.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Entities/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Main/Init.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/hello.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="d15b856f-6b37-4ab9-820e-76774467c8ff" name="Changes" comment="some code changed">
+      <change afterPath="$PROJECT_DIR$/src/main/java/bypassingSitePages/SiteParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/entities/Field.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/LemmaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/LemmaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Index.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Lemma.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Lemma.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Page.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Lemmatizer/LemmaFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Lemmatizer/LemmaFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main/DefaultController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Repositories/IndexRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Repositories/IndexRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Repositories/LemmaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Repositories/LemmaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Repositories/PageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Repositories/PageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/IndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/IndexController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/LemmaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/LemmaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/PageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Index.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Lemma.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Lemma.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Page.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Site.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Site.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Lemmatizer/LemmaFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lemmatizer/LemmaFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/DefaultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main/Init.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Init.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Repositories/IndexRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repositories/IndexRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Repositories/LemmaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repositories/LemmaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Repositories/PageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repositories/PageRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/beans.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,8 +40,8 @@
         <option value="com.haulmont.jpb.JpaRepository" />
         <option value="Interface" />
         <option value="HTML File" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -51,11 +51,10 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/russianmorphology/russian/pom.xml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/BypassingSitePages/SiteParser.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/Entities/Index.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/Entities/Page.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/Lemmatizer/LemmaFinder.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/Repositories/PageRepository.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/entities/Index.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/entities/Page.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/lemmatizer/LemmaFinder.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/repositories/PageRepository.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
@@ -114,26 +113,13 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LemmaFinder">
-    <configuration name="BypassingSitePages.SiteParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="BypassingSitePages.SiteParser" />
-      <module name="SearchEngine" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Repositories.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.SiteParser">
     <configuration name="LemmaFinder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Lemmatizer.LemmaFinder" />
+      <option name="MAIN_CLASS_NAME" value="lemmatizer.LemmaFinder" />
       <module name="SearchEngine" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Repositories.*" />
+          <option name="PATTERN" value="repositories.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -142,11 +128,37 @@
       </method>
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main.Main" />
+      <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="SearchEngine" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Main.*" />
+          <option name="PATTERN" value="main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Parser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="bypassintSitePages.Parser.Parser" />
+      <module name="SearchEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="bypassintSitePages.Parser.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SiteParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="bypassingSitePages.SiteParser" />
+      <module name="SearchEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="repositories.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -159,7 +171,7 @@
       <module name="SearchEngine" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="BypassingSitePages.*" />
+          <option name="PATTERN" value="controllers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -167,17 +179,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="morphology-1.5.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/russianmorphology/solr-morphology-analysis/target/morphology-1.5.jar" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SiteParser" />
         <item itemvalue="Application.LemmaFinder" />
+        <item itemvalue="Application.Parser" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.BypassingSitePages.SiteParser" />
         <item itemvalue="Application.SiteParsing" />
-        <item itemvalue="JAR Application.morphology-1.5.jar" />
       </list>
     </recent_temporary>
   </component>
@@ -267,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660235860402</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="some code changed">
+      <created>1662130079357</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1662130079357</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -292,7 +307,8 @@
     <MESSAGE value="step 3" />
     <MESSAGE value="step 4" />
     <MESSAGE value="step 4 changed" />
-    <option name="LAST_COMMIT_MESSAGE" value="step 4 changed" />
+    <MESSAGE value="some code changed" />
+    <option name="LAST_COMMIT_MESSAGE" value="some code changed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

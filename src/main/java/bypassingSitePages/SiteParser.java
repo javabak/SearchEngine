@@ -1,4 +1,4 @@
-package BypassingSitePages;
+package bypassingSitePages;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.TreeSet;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveAction;
 
 
@@ -20,43 +21,16 @@ public class SiteParser extends RecursiveAction {
     public final static String Url = "jdbc:mysql://127.0.0.1:3306/search_engine?serverTimezone=UTC";
     public final static String path = "https://www.playback.ru/";
     private final static String regex = "[^А-Яа-яA-Za-z<>/\\s+!-]+";
+    public static TreeSet<String> pageLinks = new TreeSet<>();
+
 
     public static Connection connection;
-    public static ArrayList<String> pageLinks = new ArrayList<>();
+
 
     public static void main(String[] args) throws IOException {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         forkJoinPool.invoke(new SiteParser());
         forkJoinPool.shutdown();
-    }
-
-
-    public void mainPageParser(String path) throws IOException, SQLException, InterruptedException {
-        org.jsoup.Connection.Response d = Jsoup.connect(path).execute();
-        Document document = Jsoup.connect(path)
-                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                .referrer("http://www.google.com")
-                .maxBodySize(0)
-                .get();
-
-        Elements elements = document.getElementsByAttribute("href");
-
-        pageLinks.add(path);
-
-        for (Element element : elements) {
-            String link = element.absUrl("href");
-
-            if (link.startsWith(path) && link.endsWith(".html")) {
-
-                pageLinks.add(link);
-
-                String sql = "INSERT INTO page(path, code, content) " +
-                        "VALUES('" + link.substring(22) + "', '" + d.statusCode() + "', '"
-                        + document.toString().replaceAll(regex, "") + "')";
-
-                connection.createStatement().executeUpdate(sql);
-            }
-        }
     }
 
     public void connectToDateBase() {
@@ -82,10 +56,31 @@ public class SiteParser extends RecursiveAction {
     protected void compute() {
         try {
             connectToDateBase();
-            mainPageParser(path);
-        } catch (IOException | SQLException | InterruptedException e) {
+            org.jsoup.Connection.Response d = Jsoup.connect(path).execute();
+            Document document = Jsoup.connect(path)
+                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                    .referrer("http://www.google.com")
+                    .maxBodySize(0)
+                    .get();
+
+            Elements elements = document.getElementsByAttribute("href");
+
+            pageLinks.add(path);
+            for (Element element : elements) {
+                String link = element.absUrl("href");
+                if (link.endsWith(".html")) {
+                    pageLinks.add(link);
+                    String sql = "INSERT INTO page(path, code, content) " +
+                            "VALUES('" + link.substring(10) + "', '" + d.statusCode() + "', '"
+                            + document.toString().replaceAll(regex, "") + "')";
+
+                    connection.createStatement().executeUpdate(sql);
+                }
+            }
+
+            ForkJoinTask.invokeAll();
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
-        fork();
     }
 }

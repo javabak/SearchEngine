@@ -1,6 +1,6 @@
-package Repositories;
+package repositories;
 
-import Entities.Index;
+import entities.Index;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

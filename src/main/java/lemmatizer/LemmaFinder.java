@@ -1,6 +1,6 @@
-package Lemmatizer;
+package lemmatizer;
 
-import BypassingSitePages.SiteParser;
+import bypassingSitePages.SiteParser;
 import org.apache.commons.math3.util.Precision;
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
@@ -188,6 +188,16 @@ public class LemmaFinder {
         }
     }
 
+    public void findPageRelevance() {
+
+
+
+
+
+
+    }
+
+
 
     public void insertLemmaIntoDataBase() throws SQLException {
         Connection connection = DriverManager.getConnection(SiteParser.Url, SiteParser.USER_NAME, SiteParser.PASSWORD);
@@ -254,7 +264,6 @@ public class LemmaFinder {
             System.out.println(doubleEntry.getKey() + " - " + doubleEntry.getValue());
         }
     }
-
 
     private TreeMap<String, String> printSitesWhichContainsLemmasFromQuery() {
         for (Map.Entry<String, String> entry : linksFromLemmasQuery.entrySet()) {
