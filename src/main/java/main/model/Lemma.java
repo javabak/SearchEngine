@@ -1,4 +1,4 @@
-package entities;
+package main.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -56,5 +56,8 @@ public class Lemma {
     @Override
     public int hashCode() {
         return Objects.hash(id, lemma, frequency);
+    }
+
+    public void setSite(Site site) {
     }
 }

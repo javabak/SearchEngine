@@ -20,16 +20,16 @@ import java.util.TreeMap;
 import java.util.concurrent.ForkJoinPool;
 
 public class LemmaFinder {
-    private final static String REGEX = "[^А-Яа-я]+";
+    public final static String REGEX = "[^А-Яа-я]+";
 
     private final LuceneMorphology luceneMorphology = new RussianLuceneMorphology();
     private static final String[] particlesNames = new String[]{"МЕЖД", "ПРЕДЛ", "СОЮЗ"};
 
     private final HashMap<String, Integer> lemmasFrequency = new HashMap<>();
     private final HashMap<String, Double> lemmasRank = new HashMap<>();
-    private HashMap<String, Integer> lemmasFromQueryWithFrequency = new HashMap<>();
+    private final HashMap<String, Integer> lemmasFromQueryWithFrequency = new HashMap<>();
     private final TreeMap<String, String> linksFromLemmasQuery = new TreeMap<>();
-    private final String words = "оплата корзина телефон магазин";
+    private String words = "оплата корзина телефон";
 
 
     public LemmaFinder() throws IOException {
@@ -42,7 +42,6 @@ public class LemmaFinder {
         forkJoinPool.invoke(new SiteParser());
 
         lemmaFinder.launchClassMethods();
-        forkJoinPool.shutdownNow();
     }
 
 
@@ -143,7 +142,7 @@ public class LemmaFinder {
             ResultSet resultSet = connection.createStatement().executeQuery(sql);
 
             while (resultSet.next()) {
-                if (resultSet.getString("lemma").equals(normalWord)) {
+                if (normalWord.equals(resultSet.getString("lemma"))) {
                     if (resultSet.getInt("frequency") > 100) {
                         lemmasFromQueryWithFrequency.put(normalWord, resultSet.getInt("frequency") / 10);
                     } else {
@@ -156,9 +155,8 @@ public class LemmaFinder {
 
 
     public void getSitesWhichContainsLemmasFromQuery() throws IOException {
-        for (Map.Entry<String, Integer> entry : lemmasFromQueryWithFrequency.entrySet()) {
-            for (String link : SiteParser.pageLinks) {
-
+        for (String link : SiteParser.pageLinks) {
+            for (Map.Entry<String, Integer> entry : lemmasFromQueryWithFrequency.entrySet()) {
 
                 Document document = Jsoup.connect(link)
                         .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
@@ -180,11 +178,12 @@ public class LemmaFinder {
 
                     String normalWord = normalForms.get(0);
 
-                    if (entry.getKey().equals(normalWord)) {
-                        linksFromLemmasQuery.put(normalWord, link);
+                    if (normalWord.equals(entry.getKey())) {
+                        linksFromLemmasQuery.put(link, normalWord);
                     }
                 }
             }
+            continue;
         }
     }
 
@@ -193,11 +192,7 @@ public class LemmaFinder {
 
 
 
-
-
     }
-
-
 
     public void insertLemmaIntoDataBase() throws SQLException {
         Connection connection = DriverManager.getConnection(SiteParser.Url, SiteParser.USER_NAME, SiteParser.PASSWORD);

@@ -1,11 +1,11 @@
 package repositories;
 
-import entities.Index;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.model.Index;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IndexRepository extends JpaRepository<Index, Integer> {
+public interface IndexRepository extends CrudRepository<Index, Integer> {
 
 }
 

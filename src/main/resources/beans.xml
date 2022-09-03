@@ -8,8 +8,8 @@
     <bean id="main" class="main.Main"/>
     <bean id="site_parser" class="bypassingSitePages.SiteParser"/>
     <bean id="lemma_finder" class="lemmatizer.LemmaFinder"/>
-    <bean id="index" class="entities.Index"/>
-    <bean id="lemma" class="entities.Lemma"/>
-    <bean id="page" class="entities.Page"/>
+    <bean id="index" class="main.model.Index"/>
+    <bean id="lemma" class="main.model.Lemma"/>
+    <bean id="page" class="main.model.Page"/>
     <bean id="lemmaService" class="Services.LemmaService"/>
 </beans>

@@ -1,9 +1,7 @@
 
 package main;
 
-import entities.Lemma;
-import repositories.LemmaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import main.model.Lemma;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/api")
 public class DefaultController {
 
-    @Autowired
-    private LemmaRepository lemmaRepository;
+//    @Autowired
+//    private LemmaRepository lemmaRepository;
 
     private Lemma lemma;
 

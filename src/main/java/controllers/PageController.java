@@ -6,4 +6,5 @@ import org.springframework.stereotype.Controller;
 @Controller
 @Component
 public class PageController {
+
 }
