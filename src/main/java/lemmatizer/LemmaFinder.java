@@ -1,6 +1,9 @@
 package lemmatizer;
 
 import bypassingSitePages.SiteParser;
+import main.model.Index;
+import main.model.Lemma;
+import main.model.Page;
 import org.apache.commons.math3.util.Precision;
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
@@ -13,10 +16,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 
 public class LemmaFinder {
@@ -29,7 +29,13 @@ public class LemmaFinder {
     private final HashMap<String, Double> lemmasRank = new HashMap<>();
     private final HashMap<String, Integer> lemmasFromQueryWithFrequency = new HashMap<>();
     private final TreeMap<String, String> linksFromLemmasQuery = new TreeMap<>();
-    private String words = "оплата корзина телефон";
+    private final ArrayList<String> listForLemmas = new ArrayList<>();
+    private final TreeSet<String> listForPages = new TreeSet<>();
+    private final HashMap<Lemma, Integer> lemmaIntegerHashMap = new HashMap<>();
+    private final HashMap<Page, Integer> pageIntegerHashMap = new HashMap<>();
+    private final HashMap<Index, Integer> indexIntegerHashMap = new HashMap<>();
+    
+    private static String words = "оплата корзина телефон";
 
 
     public LemmaFinder() throws IOException {
@@ -45,7 +51,8 @@ public class LemmaFinder {
     }
 
 
-    public void getBodyLemmasFromEachPage() throws IOException {
+    //Получаем леммы с тела страниц
+    public void getBodyLemmasFromEachPage(HashMap<String, Integer> lemmasFrequency) throws IOException {
         for (String link : SiteParser.pageLinks) {
 
             Document document = Jsoup.connect(link)
@@ -83,7 +90,8 @@ public class LemmaFinder {
         }
     }
 
-    public void getTitleLemmasFromEachPage() throws IOException {
+    //Получаем леммы с заголовка страниц
+    public void getTitleLemmasFromEachPage(HashMap<String, Integer> lemmasFrequency) throws IOException {
         for (String link : SiteParser.pageLinks) {
 
             Document document = Jsoup.connect(link)
@@ -122,6 +130,7 @@ public class LemmaFinder {
     }
 
 
+    //Сохраняем леммы с запроса
     public void saveLemmasFromQuery(String words) throws SQLException {
         Connection connection = DriverManager.getConnection(SiteParser.Url, SiteParser.USER_NAME, SiteParser.PASSWORD);
 
@@ -154,7 +163,7 @@ public class LemmaFinder {
     }
 
 
-    public void getSitesWhichContainsLemmasFromQuery() throws IOException {
+    public void getSitesWhichContainsLemmasFromQuery() throws IOException, SQLException {
         for (String link : SiteParser.pageLinks) {
             for (Map.Entry<String, Integer> entry : lemmasFromQueryWithFrequency.entrySet()) {
 
@@ -179,11 +188,12 @@ public class LemmaFinder {
                     String normalWord = normalForms.get(0);
 
                     if (normalWord.equals(entry.getKey())) {
-                        linksFromLemmasQuery.put(link, normalWord);
+                        listForLemmas.add(entry.getKey());
+                        listForPages.add(link);
+                        //linksFromLemmasQuery.put(link, normalWord);
                     }
                 }
             }
-            continue;
         }
     }
 
@@ -194,6 +204,7 @@ public class LemmaFinder {
 
     }
 
+    //Создаем и заполняем таблицу lemma
     public void insertLemmaIntoDataBase() throws SQLException {
         Connection connection = DriverManager.getConnection(SiteParser.Url, SiteParser.USER_NAME, SiteParser.PASSWORD);
 
@@ -213,6 +224,7 @@ public class LemmaFinder {
     }
 
 
+    //Создаем и заполняем таблицу index
     public void insertLemmaRankIntoDataBase() throws SQLException {
         Connection connection = DriverManager.getConnection(SiteParser.Url, SiteParser.USER_NAME, SiteParser.PASSWORD);
 
@@ -232,7 +244,6 @@ public class LemmaFinder {
         }
     }
 
-
     public boolean anyWordBaseBelongToParticle(List<String> wordBaseForms) {
         return wordBaseForms.stream().anyMatch(this::hasParticleProperty);
     }
@@ -246,7 +257,7 @@ public class LemmaFinder {
         return false;
     }
 
-
+    //Печатаем frequency всех лемм
     private void printAllLemmas() {
         for (Map.Entry<String, Integer> w : lemmasFrequency.entrySet()) {
             System.out.println(w.getKey() + " - " + w.getValue());
@@ -254,32 +265,36 @@ public class LemmaFinder {
     }
 
 
+    //Печатаем rank всех лемм
     private void printLemmaRank() {
         for (Map.Entry<String, Double> doubleEntry : lemmasRank.entrySet()) {
             System.out.println(doubleEntry.getKey() + " - " + doubleEntry.getValue());
         }
     }
 
-    private TreeMap<String, String> printSitesWhichContainsLemmasFromQuery() {
-        for (Map.Entry<String, String> entry : linksFromLemmasQuery.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
-        if (linksFromLemmasQuery.isEmpty()) {
-            return new TreeMap<>();
-        } else {
-            return linksFromLemmasQuery;
-        }
-    }
+ //   private TreeMap<String, String> printSitesWhichContainsLemmasFromQuery() {
+//            for (String lemma : listForLemmas) {
+//                for (String page : listForPages) {
+//                    System.out.println("Слово : " + lemma + " встречается на странице" + " - " + page);
+//            }
+//        }
+//        if (linksFromLemmasQuery.isEmpty()) {
+//            return new TreeMap<>();
+//        } else {
+//            return linksFromLemmasQuery;
+//        }
+ //   }
 
+    //Запускаем все необходимые методы класса
     public void launchClassMethods() throws SQLException, IOException {
-        getTitleLemmasFromEachPage();
-        getBodyLemmasFromEachPage();
+        getTitleLemmasFromEachPage(lemmasFrequency);
+        getBodyLemmasFromEachPage(lemmasFrequency);
 
         insertLemmaIntoDataBase();
         insertLemmaRankIntoDataBase();
 
         saveLemmasFromQuery(words);
         getSitesWhichContainsLemmasFromQuery();
-        printSitesWhichContainsLemmasFromQuery();
+        //printSitesWhichContainsLemmasFromQuery();
     }
 }

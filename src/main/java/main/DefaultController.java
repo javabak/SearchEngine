@@ -2,21 +2,28 @@
 package main;
 
 import main.model.Lemma;
+import main.repositories.LemmaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/api")
 public class DefaultController {
 
-//    @Autowired
-//    private LemmaRepository lemmaRepository;
+    private final LemmaRepository lemmaRepository;
 
-    private Lemma lemma;
+
+    @Autowired
+    public DefaultController(LemmaRepository lemmaRepository) {
+        this.lemmaRepository = lemmaRepository;
+    }
 
     @RequestMapping("/admin")
     public String index() {
@@ -36,12 +43,14 @@ public class DefaultController {
     }
 
 
-    //А можно сделать попроще
-    @GetMapping("/hi")
-    public String hi(@ModelAttribute("lemma") Lemma lemma) {
-        System.out.println(lemma.getFrequency());
-        System.out.println(lemma.getLemma());
-        return "hello";
+    @GetMapping("/lemmas")
+    public List<Lemma> getLemma() {
+        return lemmaRepository.findAll();
+    }
+
+    @PostMapping("/saveLemma")
+    public Lemma save(Lemma lemma) {
+        return lemmaRepository.save(lemma);
     }
 }
 
